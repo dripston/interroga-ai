@@ -1,0 +1,208 @@
+
+================================================================================
+  STANDOFF — AI HOSTAGE NEGOTIATION GAME
+  FRONTEND ARCHITECTURE ABSTRACT
+================================================================================
+
+OVERVIEW
+--------
+Standoff's frontend is a voice-first, real-time single-page application. The
+entire UI is designed around one core emotional moment: you are on an active
+call with someone dangerous, and the clock is running. Every UI element
+reinforces urgency, tension, and immersion. No menus. No tabs. No distractions.
+
+Tech: Vanilla JS + HTML/CSS (or React if complexity demands it), WebSocket
+      client for full-duplex comms, Web Audio API for voice capture + playback,
+      Canvas/CSS animations for visual feedback.
+
+================================================================================
+SCREEN 1: ROLE ASSIGNMENT (Pre-Game, ~5 seconds)
+================================================================================
+
+  Layout: Full dark screen, centered card.
+
+  Display:
+    • Animated seal / emblem fades in
+    • "YOU HAVE BEEN ASSIGNED" (small caps)
+    • Role title fades in bold: "DISTRICT COLLECTOR, LUCKNOW"
+    • Brief authority description: "You have direct command of local police.
+      SWAT awaits your authorization."
+    • [ACCEPT BRIEFING] button
+
+  Feel: Dramatic. Like the opening of a spy thriller.
+
+================================================================================
+SCREEN 2: BRIEFING (Pre-Game, ~15 seconds read)
+================================================================================
+
+  Layout: Dark background, single scrollable panel center screen.
+           Faint ambient sound: distant sirens, police radio chatter.
+
+  Display:
+    • Case title: "KANPUR CENTRAL BANK — ACTIVE HOSTAGE SITUATION"
+    • Situation summary (3-4 lines)
+    • Hostage grid: 4 avatars with name, age, status (Healthy / Injured)
+    • Hostage-taker card: name, archetype label ("REVENGE-DRIVEN"), armed status
+    • Demands list (1-3 bullet points)
+    • Commander intro message (text, typewriter effect):
+      "Collector sahab, one hostage is injured. Get him out first. Do NOT
+       promise money. You're on in 10 seconds."
+    • [BEGIN NEGOTIATION] button — starts 3-second countdown then connects call
+
+================================================================================
+SCREEN 3: ACTIVE NEGOTIATION (Main Game — 15 minutes)
+================================================================================
+
+  LAYOUT (3-panel):
+
+  ┌─────────────────────────────────────────────┬──────────────────────┐
+  │                                             │                      │
+  │            MAIN CALL PANEL                 │   INTEL FEED         │
+  │                (center)                    │   (right sidebar)    │
+  │                                             │                      │
+  │  ┌─ SITUATION BOARD (top bar) ───────────┐  │  [INTEL OFFICER]     │
+  │  │ 🕐 12:34   😰 STRESS 67%  🤝 TRUST 31% │  │  Text messages from  │
+  │  │ Hostages: ● ● ◌ ●  (1 released)      │  │  your field intel    │
+  │  └────────────────────────────────────────┘  │  officer appear here │
+  │                                             │  like a chat window  │
+  │         [HOSTAGE-TAKER VISUAL]              │                      │
+  │    Illustrated scene / CCTV-style image     │  You can type a      │
+  │    of the location. Static but atmospheric. │  query:              │
+  │    Glitch / distortion effect when stress   │  > "check his record" │
+  │    is high.                                 │                      │
+  │                                             │  Response appears    │
+  │    [LIVE AUDIO WAVEFORM]                    │  within 2 seconds.   │
+  │    Pulses when hostage-taker is speaking.   │                      │
+  │    Flat when player should speak.           ├──────────────────────│
+  │                                             │                      │
+  │  ┌─ VOICE CONTROLS (bottom) ─────────────┐  │  COMMANDER ALERTS    │
+  │  │  [🎙️ HOLD TO SPEAK]  [MUTE]  [INTEL] │  │                      │
+  │  └───────────────────────────────────────-┘  │  Red banner drops    │
+  │                                             │  from top when       │
+  │                                             │  commander sends a   │
+  │                                             │  directive. Auto-    │
+  │                                             │  dismisses in 8s.    │
+  └─────────────────────────────────────────────┴──────────────────────┘
+
+  MAIN CALL PANEL — Details:
+    • Hostage-taker's voice plays through speakers with voice-specific tone
+      (Sarvam TTS with unique voice per character archetype)
+    • Audio visualizer (waveform) animates to speech
+    • HOLD TO SPEAK: player holds spacebar or button, mic activates, VAD 
+      detects end of speech, sends automatically
+    • While hostage-taker is speaking → player controls disabled (barge-in
+      disabled intentionally for realism — you wait for them to finish)
+
+  SITUATION BOARD — Live updates:
+    • Timer counts down MM:SS, turns red at 5:00 remaining
+    • Stress meter: Green (0-40) → Orange (41-70) → Red (71-100)
+      Hostage-taker visual reacts: calm → agitated → explosive body language
+    • Trust meter: fills up as negotiation progresses
+    • Hostage dots: filled = alive/inside, outlined = released, red = injured/dead
+
+  EVENT ANIMATIONS:
+    • Hostage released → one dot animates out with green flash
+    • Shot fired → screen red flash + gunshot SFX
+    • Hostage hurt → dot turns red + distressed audio clip
+    • Stress spike → scene image glitches, audio static burst
+    • Commander alert → red banner slides down from top
+
+  INTEL SIDEBAR:
+    • Styled like a secure messenger (dark, monospace font)
+    • Intel Officer sends messages proactively at timed intervals
+    • Player can query by typing (mutes main call automatically while typing)
+    • Query [ENTER] → response in ~2 seconds
+    • Each intel message has a lock icon → unlocked vs classified
+
+  VOICE INPUT FLOW:
+    1. Player holds [SPACE] or taps [SPEAK] button
+    2. Mic activates, red recording indicator appears
+    3. VAD detects silence → auto-stops recording
+    4. "Sending..." indicator
+    5. Hostage-taker's response audio begins playing
+    6. Transcript of both sides appears below the visual as subtle subtitles
+
+================================================================================
+SCREEN 4: OUTCOME (Post-Game)
+================================================================================
+
+  LAYOUT: Full screen, cinematic.
+
+  Display sequence (animated, 1-by-1):
+    • Fade to black
+    • "SITUATION RESOLVED" or "SITUATION FAILED" — large, stark text
+    • Score: animated counter counts up to final score (e.g., 94 / 100)
+    • Breakdown:
+        Hostages rescued        ██████████ 50/50
+        Peaceful surrender      ██████     25/25
+        No shots fired          ██████     15/15
+        Intel gathered          ████       4/10
+    • Strategic critique (3-4 lines of AI-generated feedback)
+
+================================================================================
+SCREEN 5: AFTERMATH (Post-Game — the shareable moment)
+================================================================================
+
+  LAYOUT: Newspaper/news-report aesthetic.
+          Faded vintage paper background, bold headline font.
+
+  Display:
+    • Dateline: "LUCKNOW, [DATE]"
+    • Headline: "CRISIS AVERTED AT KANPUR CENTRAL BANK AFTER 15-MINUTE STANDOFF"
+    • 3-paragraph AI-generated aftermath story — written like a real news article
+    • Mentions specific player decisions and their consequences
+    • Hostage status updates (all survived / one injured / tragedy)
+    • Policy consequences mentioned if relevant (inquiry launched, etc.)
+    • [SHARE] button → copies formatted text to clipboard for LinkedIn/Twitter
+    • [PLAY AGAIN] button
+
+================================================================================
+WEBSOCKET MESSAGE PROTOCOL
+================================================================================
+
+  CLIENT → SERVER:
+    { type: "audio_chunk",   data: base64_pcm }
+    { type: "intel_query",   query: str }
+    { type: "game_start",    case_id: str }
+
+  SERVER → CLIENT:
+    { type: "taker_audio",    audio_b64: str, transcript: str }
+    { type: "state_update",   stress: int, trust: int,
+                              hostages: [...], time_remaining: int }
+    { type: "intel_message",  text: str, classified: bool }
+    { type: "commander_alert",text: str, urgency: "low|high|critical" }
+    { type: "event_fired",    event_type: str, effect: str }
+    { type: "game_over",      outcome: str, score: int,
+                              breakdown: {...}, aftermath: str }
+
+================================================================================
+DESIGN LANGUAGE
+================================================================================
+
+  Colors:
+    Background    : #0A0A0A (near black)
+    Accent        : #C8102E (crisis red)
+    Text primary  : #E8E8E8 (off-white)
+    Text secondary: #888888 (muted)
+    Trust color   : #00C853 (green)
+    Stress color  : #FF6D00 (orange) → #C8102E (red, high stress)
+
+  Typography:
+    Headings      : "Bebas Neue" or "Oswald" — condensed, authoritative
+    Body          : "JetBrains Mono" or "IBM Plex Mono" — secure terminal feel
+    Intel feed    : Monospace, small, classified document aesthetic
+
+  Animations:
+    All state changes smooth (200ms ease)
+    Screen red flash on gunshot: 400ms flash → fade
+    Timer pulses red at < 5:00
+    Waveform: CSS/Canvas real-time audio visualizer
+    Glitch effect: CSS keyframe filter distortion on stress > 80
+
+  Sound Design:
+    Ambient loop  : Distant police radio, sirens, urban noise
+    Event SFX     : Gunshot, door slam, crowd noise, phone crackle
+    UI sounds     : Subtle click on send, alert chime on commander message
+    All SFX: preloaded on game start, triggered by event_fired messages
+
+================================================================================

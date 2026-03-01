@@ -1,0 +1,21 @@
+{
+  "questions_asked_count": 0,
+  "questions_history": [],
+  "information_revealed": [],
+  "lies_told": [],
+  "emotional_reactions": [],
+  "topics_discussed": [],
+  "willingness_to_talk": {
+    "about_alibi": "defensive",
+    "about_secret": "very_reluctant",
+    "about_relationships": "cautious",
+    "about_motive": "evasive",
+    "about_crime": "concerned"
+  },
+  "stress_level": 0,
+  "consistency_check": {
+    "alibi_told_consistently": true,
+    "story_changed": false,
+    "contradictions": []
+  }
+}

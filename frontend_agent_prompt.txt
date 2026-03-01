@@ -1,0 +1,51 @@
+You are tasked with implementing the new WebSocket streaming functionality for the text mode interrogations in the AI Detective Game.
+
+## Backend Architecture Change
+We have replaced the standard `POST /game/{case_id}/interrogate` HTTP endpoint with a continuous WebSocket feed to reduce perceived latency and provide a typewriter-like feel for the responses.
+
+The new endpoint is:
+`ws://localhost:8000/game/{case_id}/interrogate/text_stream`
+
+## Implementation Details
+
+### Connection
+- Establish a WebSocket connection using the native browser `WebSocket` API (or your preferred framework's wrapper) when the user enters the interrogation screen.
+
+### Sending Messages
+Send the user's input as a JSON string containing the type, suspect name, and user's message:
+
+```javascript
+ws.send(JSON.stringify({
+  type: "message",
+  suspect_name: "Vikram Thakur", // Must match exactly with the character names in the case
+  message: "Where were you at the time of the murder?"
+}));
+```
+
+### Receiving Content
+The WebSocket will progressively stream the LLM's response. You must listen for the following event types:
+
+1. **`text_chunk`**: Emitted sequentially as the AI generates sentences.
+   - Example Payload: `{"type": "text_chunk", "text": "I was at the library."}`
+   - Action: Append `data.text` to the current chat bubble in the UI.
+
+2. **`response_complete`**: Emitted when the AI finishes its full response.
+   - Example Payload: `{"type": "response_complete", "full_text": "I was at the library. You can check the logs.", "questions_remaining": 15, "questions_used": 5}`
+   - Action: Finalize the chat bubble, unlock the UI input for the next question, and update the HUD's remaining questions counter.
+
+3. **`error`**: Something went wrong.
+   - Example Payload: `{"type": "error", "message": "No questions remaining for Vikram Thakur"}`
+   - Action: Display an error toast to the user.
+
+### Disconnecting
+When the user leaves the text interrogation screen, close the connection gracefully to free up resources:
+```javascript
+ws.send(JSON.stringify({ type: "close" }));
+ws.close();
+```
+
+
+## UI/UX Requirements
+- Create an "isTyping" or pulsing indicator that shows while the request is out but chunks haven't started arriving.
+- Once chunks arrive, animate them in smoothly (typewriter effect or soft fading) directly into the new chat bubble block.
+- Disable the submit button and chat input while the assistant is streaming. Re-enable them upon receiving the `response_complete` frame.

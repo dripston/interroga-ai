@@ -1,0 +1,35 @@
+{
+  "Kabir Malhotra": {
+    "relationship_type": "family",
+    "how_close_we_are": "Cold, transactional; Kabir threatened exposure, she pleaded for silence",
+    "is_this_public_knowledge": true,
+    "how_i_would_describe_our_relationship": "Biological mother and son; Kabir recently discovered the truth",
+    "what_i_know_about_them": "",
+    "our_recent_interaction": "",
+    "the_tension_between_us": "Cold, transactional; Kabir threatened exposure, she pleaded for silence",
+    "how_i_feel_about_them": "They're my family — our bond is Cold, transactional; Kabir threatened exposure, she pleaded for silence",
+    "how_much_i_trust_them": "moderate"
+  },
+  "Rohan Mehta": {
+    "relationship_type": "professional",
+    "how_close_we_are": "Hierarchical; Rohan obeys without question",
+    "is_this_public_knowledge": true,
+    "how_i_would_describe_our_relationship": "Supervisor and intern",
+    "what_i_know_about_them": "",
+    "our_recent_interaction": "",
+    "the_tension_between_us": "Hierarchical; Rohan obeys without question",
+    "how_i_feel_about_them": "We have a professional relationship",
+    "how_much_i_trust_them": "moderate"
+  },
+  "Baba Jee": {
+    "relationship_type": "mentorship",
+    "how_close_we_are": "He knows her secret but never confronted her",
+    "is_this_public_knowledge": true,
+    "how_i_would_describe_our_relationship": "Longtime observer and silent witness to her past",
+    "what_i_know_about_them": "",
+    "our_recent_interaction": "",
+    "the_tension_between_us": "He knows her secret but never confronted her",
+    "how_i_feel_about_them": "We have a mentor/student dynamic",
+    "how_much_i_trust_them": "moderate"
+  }
+}

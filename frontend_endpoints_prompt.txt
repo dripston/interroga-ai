@@ -1,0 +1,80 @@
+# Frontend Setup: Investigating the Text/Voice Mode Game Backend
+
+The user can investigate essentially in two ways during a game session: by interrogating **Suspects** directly or by relying on the **Task Agent**. Depending on whether it's `text` or `voice` mode, access is slightly different.
+
+## 1. Interrogating Suspects
+Suspects are available at `/game/{case_id}/interrogate`. In text mode, this is a standard REST interface; in voice mode it operates over WebSockets for streamed STT/TTS delivery.
+
+### Text Mode (REST Endpoint)
+If the game session is loaded in `mode="text"`, you communicate with suspects using a simple POST request:
+
+**`POST /game/{case_id}/interrogate`**
+```json
+{
+  "suspect_name": "Aarohi",
+  "message": "Why do you have such high debts?"
+}
+```
+
+Response format:
+```json
+{
+  "response": "Business has been slow.",
+  "response_english": "Business has been slow.",
+  "questions_remaining": 19,
+  "questions_used": 1
+}
+```
+
+### Voice Mode (WebSocket streaming)
+If `mode="voice"` is selected during creation, establish a persistent socket.
+
+**`WS /game/{case_id}/interrogate/voice`**
+The client must send an audio frame object structure instead:
+```json
+{
+  "type": "audio",
+  "suspect_name": "Aarohi",
+  "data": "AABHRzI...." // Base64 encoded audio
+}
+```
+
+## 2. The Task Agent
+The Task Agent handles all non-suspect investigations: researching environments, fetching CCTV records, finding digital logs, etc. Its endpoint is purely text REST, regardless of the game mode.
+
+**`POST /game/{case_id}/task`**
+```json
+{
+  "command": "Check the corridor CCTV"
+}
+```
+
+Response format:
+```json
+{
+  "result": "I checked the feeds. A figure was seen escaping down the hall at 02:40 hours.",
+  "questions_remaining": 19,
+  "questions_used": 1
+}
+```
+
+## Punch Reaction Option (Text/Voice)
+In either mode, a suspect may be "physically pushed/intimidated" via a REST API:
+**`POST /game/{case_id}/punch`**
+```json
+{
+   "suspect_name": "Aarohi",
+   "action": "slap"
+}
+```
+If in voice mode, `audio_b64` will be returned. Otherwise only text definitions.
+
+## 3. Game Creation and Briefing Audio
+When establishing a new investigation session (`POST /game/create`) or loading an existing one (`POST /game/load`), the backend returns the full case briefing along with the suspects array.
+
+The `briefing_text` is dynamically cleaned by the server to be completely TTS-safe (stripping markdown, formatting, and expanding age numbers to spoken words). 
+
+Because the text is quite long, the server does **not** generate the audio itself to avoid the 30-second Sarvam API limits. Instead, the `briefing_audio_b64` will always be `null`.
+
+**Frontend Responsibility:**
+The frontend should parse the returned `briefing_text` sentence-by-sentence (e.g. splitting by `. `) and sequentially stream those chunks to the Sarvam TTS API using the `"varun"` voice model to play the briefing aloud continuously for the user.

@@ -1,0 +1,208 @@
+# Frontend Implementation: Submit Solution & Judge Verdict Screen
+
+The backend submission endpoint has been completely reworked. The old single-field `culprit_name` submission is gone. The player now submits a structured accusation with three fields: **Who**, **Why**, and **How**. The backend Judge AI evaluates each axis independently using a strict 100-point rubric.
+
+---
+
+## 1. The New Submit Endpoint
+
+**`POST /game/{case_id}/submit`**
+
+### Request Body (CHANGED)
+The old request was:
+```json
+{ "culprit_name": "Aarohi" }
+```
+
+The **new** request requires three string fields:
+```json
+{
+  "who": "Aarohi Sharma",
+  "why": "She wanted to claim the inheritance before the will was changed",
+  "how": "Poisoned the chai with crushed sleeping pills from the medicine cabinet"
+}
+```
+
+| Field | Type   | Description |
+|-------|--------|-------------|
+| `who` | string | The name of the suspect the player accuses as the culprit. Should match one of the suspect names from the game. |
+| `why` | string | The player's theory on the motive — why the culprit committed the crime. Free-text, can be 1-3 sentences. |
+| `how` | string | The player's theory on the method — how the crime was physically carried out. Free-text, can be 1-3 sentences. |
+
+### Response Body (UPDATED)
+```json
+{
+  "correct": true,
+  "actual_culprit": "Aarohi Sharma",
+  "motive": "Inheritance dispute — feared being cut out of the will",
+  "method": "Poisoned the evening chai with crushed sedatives",
+  "key_evidence": ["medicine cabinet fingerprints", "altered will draft", "CCTV gap at 2:40 AM"],
+  "summary": "Verdict Reached by AI Judge.",
+  "score": 80,
+  "who_score": 25,
+  "why_score": 35,
+  "how_score": 20,
+  "marking_schema": "WHO: +25 Correct culprit | WHY: +35 Partial motive — missed the inheritance angle | HOW: +20 Correct method",
+  "thinking_skills_report": "The detective effectively pressed Aarohi on her alibi timeline and used the Task Agent to pull CCTV records, but failed to investigate the medicine cabinet which would have confirmed the method conclusively.",
+  "analysis": "The truth: Aarohi poisoned the chai at 2:35 AM using crushed sedatives from the upstairs cabinet. The player correctly identified Aarohi and the poisoning method but attributed the motive to jealousy rather than the inheritance dispute revealed in the altered will."
+}
+```
+
+### New Response Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `who_score` | integer (0 or 25) | Points awarded for correctly identifying the culprit. Binary: 25 if correct, 0 if wrong. |
+| `why_score` | integer (0-50) | Points awarded for motive accuracy. Graded on a spectrum. |
+| `how_score` | integer (0-25) | Points awarded for method accuracy. Graded on a spectrum. |
+| `score` | integer (0-100) | **Total score = who_score + why_score + how_score**. BUT if `who_score` is 0, the total is automatically 0 regardless of the other scores (Zero-Sum Rule). |
+| `marking_schema` | string | Line-by-line breakdown of how points were awarded per axis. |
+| `thinking_skills_report` | string | 2-3 sentence critique of the player's investigation strategy, referencing specific actions from their suspect interviews AND Task Agent queries. |
+| `analysis` | string | Narrative comparing the truth to the player's claims. |
+
+---
+
+## 2. Submission Form UI
+
+Replace any existing single-input submission form with a **three-field accusation form**. This should feel like the detective is filing their final case report.
+
+### Recommended Layout
+```
+┌─────────────────────────────────────────────┐
+│           🔍 FILE YOUR ACCUSATION           │
+├─────────────────────────────────────────────┤
+│                                             │
+│  WHO did it?                                │
+│  ┌─────────────────────────────────────┐    │
+│  │ [Dropdown: Select from suspect list]│    │
+│  └─────────────────────────────────────┘    │
+│                                             │
+│  WHY did they do it? (Motive)               │
+│  ┌─────────────────────────────────────┐    │
+│  │ [Textarea: 2-3 sentences]           │    │
+│  │                                     │    │
+│  └─────────────────────────────────────┘    │
+│                                             │
+│  HOW did they do it? (Method)               │
+│  ┌─────────────────────────────────────┐    │
+│  │ [Textarea: 2-3 sentences]           │    │
+│  │                                     │    │
+│  └─────────────────────────────────────┘    │
+│                                             │
+│         [ ⚖️ SUBMIT ACCUSATION ]            │
+│                                             │
+└─────────────────────────────────────────────┘
+```
+
+### Key UI Details
+- **WHO field**: Should be a **dropdown/select** populated from the `suspects` array returned by `/game/create` or `/game/load`. Use the suspect `name` field as both the display label and the value sent to the backend.
+- **WHY field**: A `<textarea>` with placeholder text like *"Describe the motive — why did they commit this crime?"*. Minimum 10 characters before enabling submit.
+- **HOW field**: A `<textarea>` with placeholder text like *"Describe the method — how was the crime carried out?"*. Minimum 10 characters before enabling submit.
+- **Submit button**: Disabled until all three fields are filled. Show a loading spinner while the request is in flight (the Judge AI can take 5-15 seconds to respond).
+- **Confirmation dialog**: Before sending, show a confirmation modal: *"Are you sure? Once you submit your accusation, the case is closed."* This prevents accidental submissions.
+
+---
+
+## 3. Verdict / Results Screen
+
+After the response comes back, transition to a **Verdict Screen** that dramatically reveals the Judge's evaluation. This is the climax of the game.
+
+### Recommended Layout
+```
+┌─────────────────────────────────────────────────┐
+│              ⚖️ JUDGE'S VERDICT                  │
+├─────────────────────────────────────────────────┤
+│                                                 │
+│   TOTAL SCORE: 80 / 100                        │
+│   ████████████████████░░░░░  (progress bar)     │
+│                                                 │
+│   ┌──────────┬──────────┬──────────┐            │
+│   │ WHO: 25  │ WHY: 35  │ HOW: 20  │            │
+│   │ /25  ✅  │ /50  ⚠️  │ /25  ✅  │            │
+│   └──────────┴──────────┴──────────┘            │
+│                                                 │
+│   📋 MARKING BREAKDOWN                          │
+│   WHO: +25 Correct culprit                      │
+│   WHY: +35 Partial motive — missed inheritance  │
+│   HOW: +20 Correct method                       │
+│                                                 │
+│   🧠 INVESTIGATION CRITIQUE                     │
+│   "The detective effectively pressed Aarohi..." │
+│                                                 │
+│   📖 FULL ANALYSIS                              │
+│   "The truth: Aarohi poisoned the chai..."      │
+│                                                 │
+│   ── THE TRUTH ──                               │
+│   Culprit: Aarohi Sharma                        │
+│   Motive: Inheritance dispute                   │
+│   Method: Poisoned chai with sedatives          │
+│   Key Evidence: fingerprints, will, CCTV gap    │
+│                                                 │
+│            [ 🔄 PLAY AGAIN ]                    │
+└─────────────────────────────────────────────────┘
+```
+
+### Score Display Logic
+- **Score 0 with wrong culprit**: Show a dramatic "CASE FAILED" banner in red. Explain the Zero-Sum Rule: *"You accused the wrong person. Under the Zero-Sum Rule, your total score is 0."*
+- **Score 1-49**: Yellow/orange theme. *"Partial deduction. You're on the right track but missed critical details."*
+- **Score 50-79**: Blue theme. *"Solid detective work, but room for improvement."*
+- **Score 80-100**: Green/gold theme. *"Exceptional deduction! You cracked the case."*
+
+### Sub-Score Cards
+Display the three axis scores as individual cards or badges:
+- **WHO** card: Show `who_score / 25`. Green check if 25, red X if 0.
+- **WHY** card: Show `why_score / 50`. Color gradient based on score (red → yellow → green).
+- **HOW** card: Show `how_score / 25`. Color gradient based on score.
+
+### Sections to Render
+1. **Marking Schema** (`marking_schema`): Render as a formatted list. Split on `|` to get individual line items.
+2. **Investigation Critique** (`thinking_skills_report`): Render in a highlighted callout box. This is the Judge's direct feedback on the player's strategy.
+3. **Full Analysis** (`analysis`): Render as a paragraph in a collapsible/expandable section.
+4. **The Truth** section: Always show `actual_culprit`, `motive`, `method`, and `key_evidence` from the response so the player can see what actually happened.
+
+---
+
+## 4. Example API Call (JavaScript)
+
+```javascript
+async function submitAccusation(caseId, who, why, how) {
+  const response = await fetch(`${API_BASE}/game/${caseId}/submit`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ who, why, how })
+  });
+  
+  if (!response.ok) {
+    throw new Error(`Submit failed: ${response.statusText}`);
+  }
+  
+  return await response.json();
+  // Returns: { correct, actual_culprit, motive, method, key_evidence, summary,
+  //            score, who_score, why_score, how_score,
+  //            marking_schema, thinking_skills_report, analysis }
+}
+
+// Usage
+const verdict = await submitAccusation(
+  "1771812329",
+  "Father Thomas D'Souza",
+  "He killed to protect the church's reputation after discovering the victim's blackmail scheme",
+  "Strangled the victim with the bell rope in the vestry during evening prayers"
+);
+
+// Render verdict screen
+if (verdict.who_score === 0) {
+  showDramaticFailure(verdict);
+} else {
+  showVerdictScreen(verdict);
+}
+```
+
+---
+
+## 5. Important Notes
+
+- **The `who` field value should exactly match a suspect name** from the `suspects` array. Using a dropdown ensures this. The backend does fuzzy matching (case-insensitive, partial match), but exact names are preferred.
+- **The Judge AI takes 5-15 seconds** to respond. Show a meaningful loading state — perhaps an animation of a judge reviewing documents, or a progress bar with flavor text like *"The Judge is reviewing your case file..."*.
+- **The `thinking_skills_report` now references Task Agent actions** in addition to suspect interviews. If the player used the Task Agent to check CCTV, search rooms, etc., the Judge will comment on those actions. If they didn't use the Task Agent at all, the Judge will note that as a missed opportunity.
+- **Zero-Sum Rule is enforced server-side**: If `who_score` is 0, `score` will always be 0 regardless of `why_score` and `how_score`. The frontend should visually emphasize this rule when displaying a failed verdict.

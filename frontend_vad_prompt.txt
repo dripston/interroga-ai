@@ -1,0 +1,81 @@
+# Frontend Voice Activity Detection (VAD) Implementation Prompt
+
+Use the following architectural prompt to guide the frontend development of the Voice Activity Detection mechanism.
+
+---
+
+**Prompt for Frontend Developer / AI:**
+
+We need to implement Voice Activity Detection (VAD) in the browser for our detective game before sending audio over the WebSocket. The backend Sarvam AI STT API **only accepts raw WAV/PCM audio** and will return blank transcripts if sent `audio/webm` or `audio/ogg` from the `MediaRecorder`. 
+
+Because our backend server does not have ffmpeg installed, **the frontend MUST convert the audio to WAV before sending it via WebSocket.**
+
+**The Goal:**
+The frontend should listen to the user's microphone securely, measure the volume (RMS energy) using `AnalyserNode`, and upon detecting silence, stop the `MediaRecorder`. It must then use `AudioContext.decodeAudioData` to convert the WebM blob to a WAV array buffer, Base64 encode it, and send it to the server.
+
+**Logic & Timings to Match the Backend Custom Voice Agent:**
+1. **Energy Threshold:** Determine speech based on an RMS (Root Mean Square) threshold. Set a baseline noise gate (e.g., -45 dB) so breathing doesn't count as speech.
+2. **Silence Timeout:** Wait for exactly `0.7 seconds` of continuous silence before cutting the recording and firing the WebSocket payload.
+3. **Max Duration:** Hard cut the recording if the user talks continuously for `15.0 seconds`. 
+
+**Workflow Summary:**
+- User presses/holds "Speak".
+- `MediaRecorder` starts buffering data. `AnalyserNode` calculates RMS volume.
+- **If Volume > Threshold (-45dB):** `speech_started = true`, reset `silence_timer`.
+- **If Volume < Threshold:** start `silence_timer`.
+- **If Silence > 0.7s:** `MediaRecorder.stop()`.
+- The `ondataavailable` captures the final WebM/Ogg Blob.
+- **CRITICAL STEP - CONVERT TO WAV:**
+  1. Construct an `AudioContext`.
+  2. `const arrayBuffer = await finalBlob.arrayBuffer();`
+  3. `const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);`
+  4. Convert the `AudioBuffer` to a standardized `.wav` format ArrayBuffer (using a standard 44-byte WAV header packing function).
+  5. Convert the WAV ArrayBuffer to Base64 (NO `data:audio/wav;base64,` prefix).
+- Send it to the backend via WebSocket:
+  ```json
+  {
+      "type": "audio",
+      "suspect_name": "...",
+      "data": "UklGRiQAAABXQVZFZ..." // Raw Base64 WAV
+  }
+  ```
+
+**Here is the exact boilerplate function you need to convert the AudioBuffer to a WAV Base64 string:**
+```javascript
+function audioBufferToWavBase64(audioBuffer) {
+    const numOfChan = audioBuffer.numberOfChannels;
+    const length = audioBuffer.length * numOfChan * 2 + 44;
+    const buffer = new ArrayBuffer(length);
+    const view = new DataView(buffer);
+    const channels = [], sampleRate = audioBuffer.sampleRate;
+    let offset = 0, pos = 0;
+
+    // write WAV header
+    const setUint16 = (data) => { view.setUint16(pos, data, true); pos += 2; };
+    const setUint32 = (data) => { view.setUint32(pos, data, true); pos += 4; };
+    const writeString = (name) => { for (let i = 0; i < name.length; i++) { view.setUint8(pos++, name.charCodeAt(i)); } };
+
+    writeString('RIFF'); setUint32(length - 8); writeString('WAVE');
+    writeString('fmt '); setUint32(16); setUint16(1); setUint16(numOfChan);
+    setUint32(sampleRate); setUint32(sampleRate * 2 * numOfChan); setUint16(numOfChan * 2); setUint16(16);
+    writeString('data'); setUint32(length - pos - 4);
+
+    for (let i = 0; i < audioBuffer.numberOfChannels; i++) channels.push(audioBuffer.getChannelData(i));
+
+    while (offset < audioBuffer.length) {
+        for (let i = 0; i < numOfChan; i++) {
+            let sample = Math.max(-1, Math.min(1, channels[i][offset]));
+            sample = (0.5 + sample < 0 ? sample * 32768 : sample * 32767) | 0;
+            view.setInt16(pos, sample, true);
+            pos += 2;
+        }
+        offset++;
+    }
+    
+    // Convert ArrayBuffer to Base64
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    for (let i = 0; i < bytes.byteLength; i++) { binary += String.fromCharCode(bytes[i]); }
+    return window.btoa(binary);
+}
+```
