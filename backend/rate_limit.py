@@ -1,9 +1,14 @@
 import requests
 
 # Set up your endpoint and API key
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 url = "https://api.sambanova.ai/v1/chat/completions"
+api_key = os.getenv("SAMBANOVA_API_KEY", "your_api_key_here")
 headers = {
-    "Authorization": "Bearer c31d4323-2af1-4e51-a9b8-41c63ade6fba",
+    "Authorization": f"Bearer {api_key}",
     "Content-Type": "application/json"
 }
 payload = {
