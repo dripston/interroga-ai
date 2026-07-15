@@ -1,0 +1,20 @@
+{
+  "my_role": "I am a Clinic nursing intern",
+  "my_workplace": {
+    "location": "Department of Computer Science, Indian Institute of Technology, Bombay (IIT-B), in the student wellness clinic during final placement week",
+    "atmosphere": "The air hums with tension—students pace with resumes in hand, caffeine-stained mugs litter benches, and the scent of antiseptic from the clinic mixes with nervous sweat. Fluorescent lights flicker above silent group chats exploding with placement updates."
+  },
+  "what_i_know_about_crime": "Kabir Malhotra, a top student, collapsed during a pre-placement medical check-up after receiving a routine 'vitamin B12' injection. He was pronounced dead on arrival with symptoms resembling a sudden diabetic shock.",
+  "what_i_know_about_victim": "Kabir Malhotra, 22, Final-year CSE student, placement batch topper. A charismatic, humble Dalit scholarship student hailed as a symbol of social mobility and meritocracy..",
+  "victim_private_reality": "He was blackmailing a professor with proof of forged adoption papers that revealed his true upper-caste lineage—papers he planned to expose to destroy her reputation.",
+  "when_it_happened": "At 4:00 PM, Kabir Malhotra was found. Police are investigating.",
+  "time_of_incident": "4:00 PM",
+  "my_alibi": "Was on break at the cafeteria during the injection.",
+  "my_secret": "He pre-filled syringes as instructed by Dr. Iyer but didn’t check the vial label—trusting her authority.",
+  "my_access_level": "Didn’t know insulin was dangerous for non-diabetics.",
+  "what_i_can_access": [
+    "Common areas",
+    "Assigned workspace",
+    "Public sections"
+  ]
+}

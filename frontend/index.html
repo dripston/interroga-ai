@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AI Detective - Interrogate suspects, gather evidence, solve the case." />
+  <title>AI Detective — Interrogation Room</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+
+<body>
+  <div id="game-container">
+
+    <!-- ========== AUDIO TOGGLE ========== -->
+    <button id="global-mute-btn" class="global-mute-btn" title="Toggle Audio">🔊</button>
+
+    <!-- ========== LANDING PAGE ========== -->
+    <div id="landing">
+      <div class="scanlines"></div>
+      <div class="noise-overlay"></div>
+      <div class="landing-fog fog-1"></div>
+      <div class="landing-fog fog-2"></div>
+      <div class="landing-fog fog-3"></div>
+
+      <div class="floating-particles">
+        <span class="particle" style="--delay:0s; --x:10%; --y:20%; --dur:18s;">🔍</span>
+        <span class="particle" style="--delay:2s; --x:80%; --y:15%; --dur:22s;">📁</span>
+        <span class="particle" style="--delay:4s; --x:25%; --y:70%; --dur:20s;">🖐️</span>
+        <span class="particle" style="--delay:1s; --x:70%; --y:60%; --dur:16s;">🔫</span>
+        <span class="particle" style="--delay:3s; --x:50%; --y:30%; --dur:24s;">💀</span>
+        <span class="particle" style="--delay:5s; --x:15%; --y:85%; --dur:19s;">🗂️</span>
+        <span class="particle" style="--delay:2.5s; --x:90%; --y:45%; --dur:21s;">🔬</span>
+        <span class="particle" style="--delay:6s; --x:40%; --y:90%; --dur:17s;">⚖️</span>
+      </div>
+
+      <div class="landing-content">
+        <div class="landing-badge">
+          <span class="badge-dot"></span>
+          <span>PROTOTYPE v1.0 — CONFIDENTIAL</span>
+        </div>
+
+        <h1 class="glitch-title" data-text="AI DETECTIVE">
+          <span class="glitch-title__line1">AI</span>
+          <span class="glitch-title__line2">DETECTIVE</span>
+        </h1>
+
+        <p class="landing-tagline">
+          <span class="tagline-word" style="--i:0">Every</span>
+          <span class="tagline-word" style="--i:1">suspect</span>
+          <span class="tagline-word" style="--i:2">has</span>
+          <span class="tagline-word" style="--i:3">a</span>
+          <span class="tagline-word" style="--i:4">story.</span>
+          <span class="tagline-word accent" style="--i:5">Only</span>
+          <span class="tagline-word accent" style="--i:6">one</span>
+          <span class="tagline-word accent" style="--i:7">is</span>
+          <span class="tagline-word accent" style="--i:8">lying.</span>
+        </p>
+
+        <div class="landing-chips">
+          <div class="chip"><span class="chip-icon">🎙️</span> Voice Interrogation</div>
+          <div class="chip"><span class="chip-icon">🧠</span> AI-Powered Suspects</div>
+          <div class="chip"><span class="chip-icon">🔎</span> Real-Time Deduction</div>
+        </div>
+
+        <button id="landing-cta" class="neon-btn">
+          <span class="neon-btn__text">ENTER THE PRECINCT</span>
+          <span class="neon-btn__glow"></span>
+          <span class="neon-btn__border"></span>
+        </button>
+
+        <p class="landing-footer-text">Press <kbd>Enter</kbd> or click to begin</p>
+      </div>
+
+      <div class="corner-deco corner-tl"></div>
+      <div class="corner-deco corner-tr"></div>
+      <div class="corner-deco corner-bl"></div>
+      <div class="corner-deco corner-br"></div>
+    </div>
+
+    <!-- ========== MODE SELECTION ========== -->
+    <div id="mode-select" class="screen-hidden">
+      <div class="scanlines"></div>
+      <div class="noise-overlay"></div>
+      <div class="landing-fog fog-1"></div>
+      <div class="landing-fog fog-2"></div>
+
+      <div class="select-screen">
+        <div class="select-header">
+          <div class="select-step">STEP 01 <span class="step-divider">/</span> 03</div>
+          <h2 class="select-title">CHOOSE YOUR<br>MODE</h2>
+          <p class="select-subtitle">How do you want to interrogate the suspects?</p>
+        </div>
+
+        <div class="select-cards">
+          <button class="mode-card" data-mode="text" id="mode-text">
+            <div class="mode-card__icon">⌨️</div>
+            <div class="mode-card__label">TEXT MODE</div>
+            <div class="mode-card__desc">Type your questions. Read their answers.</div>
+            <div class="mode-card__tag">ENGLISH ONLY</div>
+          </button>
+
+          <div class="cards-divider">
+            <span>OR</span>
+          </div>
+
+          <button class="mode-card" data-mode="voice" id="mode-voice">
+            <div class="mode-card__icon">🎙️</div>
+            <div class="mode-card__label">VOICE MODE</div>
+            <div class="mode-card__desc">Speak to suspects. Hear them respond.</div>
+            <div class="mode-card__tag">MULTI-LANGUAGE</div>
+          </button>
+        </div>
+      </div>
+
+      <div class="corner-deco corner-tl"></div>
+      <div class="corner-deco corner-tr"></div>
+      <div class="corner-deco corner-bl"></div>
+      <div class="corner-deco corner-br"></div>
+    </div>
+
+    <!-- ========== LANGUAGE SELECTION (Voice only) ========== -->
+    <div id="lang-select" class="screen-hidden">
+      <div class="scanlines"></div>
+      <div class="noise-overlay"></div>
+      <div class="landing-fog fog-1"></div>
+      <div class="landing-fog fog-3"></div>
+
+      <div class="select-screen">
+        <div class="select-header">
+          <button class="select-back" id="lang-back">← BACK</button>
+          <div class="select-step">STEP 02 <span class="step-divider">/</span> 03</div>
+          <h2 class="select-title">SELECT<br>LANGUAGE</h2>
+          <p class="select-subtitle">Choose the language for voice interrogation</p>
+        </div>
+
+        <div class="lang-grid" id="lang-grid">
+          <button class="lang-card" data-lang="en"><span class="lang-label">English</span><span
+              class="lang-native">English</span></button>
+          <button class="lang-card" data-lang="hi"><span class="lang-label">Hindi</span><span
+              class="lang-native">हिन्दी</span></button>
+          <button class="lang-card" data-lang="ta"><span class="lang-label">Tamil</span><span
+              class="lang-native">தமிழ்</span></button>
+          <button class="lang-card" data-lang="te"><span class="lang-label">Telugu</span><span
+              class="lang-native">తెలుగు</span></button>
+          <button class="lang-card" data-lang="kn"><span class="lang-label">Kannada</span><span
+              class="lang-native">ಕನ್ನಡ</span></button>
+          <button class="lang-card" data-lang="ml"><span class="lang-label">Malayalam</span><span
+              class="lang-native">മലയാളം</span></button>
+          <button class="lang-card" data-lang="bn"><span class="lang-label">Bengali</span><span
+              class="lang-native">বাংলা</span></button>
+          <button class="lang-card" data-lang="mr"><span class="lang-label">Marathi</span><span
+              class="lang-native">मराठी</span></button>
+          <button class="lang-card" data-lang="gu"><span class="lang-label">Gujarati</span><span
+              class="lang-native">ગુજરાતી</span></button>
+          <button class="lang-card" data-lang="pa"><span class="lang-label">Punjabi</span><span
+              class="lang-native">ਪੰਜਾਬੀ</span></button>
+        </div>
+      </div>
+
+      <div class="corner-deco corner-tl"></div>
+      <div class="corner-deco corner-tr"></div>
+      <div class="corner-deco corner-bl"></div>
+      <div class="corner-deco corner-br"></div>
+    </div>
+
+    <!-- ========== DIFFICULTY SELECTION ========== -->
+    <div id="diff-select" class="screen-hidden">
+      <div class="scanlines"></div>
+      <div class="noise-overlay"></div>
+      <div class="landing-fog fog-2"></div>
+      <div class="landing-fog fog-3"></div>
+
+      <div class="select-screen">
+        <div class="select-header">
+          <button class="select-back" id="diff-back">← BACK</button>
+          <div class="select-step" id="diff-step">STEP 03 <span class="step-divider">/</span> 03</div>
+          <h2 class="select-title">CASE<br>DIFFICULTY</h2>
+          <p class="select-subtitle">How tough should the case be?</p>
+          <div class="select-notice" id="text-mode-notice" style="display:none;">
+            <span class="notice-icon">ℹ️</span> Text mode only supports <strong>English</strong>
+          </div>
+        </div>
+
+        <div class="diff-cards">
+          <button class="diff-card" data-diff="easy" id="diff-easy">
+            <div class="diff-card__rank">I</div>
+            <div class="diff-card__info">
+              <div class="diff-card__label">EASY</div>
+              <div class="diff-card__desc">Suspects slip up often. More obvious clues.</div>
+            </div>
+          </button>
+
+          <button class="diff-card" data-diff="medium" id="diff-medium">
+            <div class="diff-card__rank">II</div>
+            <div class="diff-card__info">
+              <div class="diff-card__label">MEDIUM</div>
+              <div class="diff-card__desc">Balanced challenge. Suspects are cautious.</div>
+            </div>
+          </button>
+
+          <button class="diff-card" data-diff="hard" id="diff-hard">
+            <div class="diff-card__rank">III</div>
+            <div class="diff-card__info">
+              <div class="diff-card__label">HARD</div>
+              <div class="diff-card__desc">Near-perfect alibis. Every word matters.</div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <div class="corner-deco corner-tl"></div>
+      <div class="corner-deco corner-tr"></div>
+      <div class="corner-deco corner-bl"></div>
+      <div class="corner-deco corner-br"></div>
+    </div>
+
+    <!-- ========== CINEMATIC GAME INTRO ========== -->
+    <div id="game-intro" class="screen-hidden">
+      <div class="scanlines"></div>
+      <div class="noise-overlay"></div>
+
+      <div class="intro-content">
+        <div class="intro-stamp" id="intro-stamp">
+          <span>CLASSIFIED</span>
+        </div>
+
+        <div class="intro-header">
+          <div class="intro-case-number" id="intro-case-number">CASE #----</div>
+          <div class="intro-date" id="intro-date"></div>
+        </div>
+
+        <div class="intro-dossier">
+          <div class="dossier-paper">
+            <div class="paper-texture"></div>
+            <div class="coffee-stain"></div>
+            <div class="redacted-section" id="redacted-1">
+              <div class="redacted-bar"></div>
+              <span class="redacted-text" id="redacted-text-1"></span>
+            </div>
+            <div class="intro-typewriter" id="intro-typewriter">
+              <p id="intro-text" class="intro-text"></p>
+              <span class="intro-cursor">▋</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="intro-progress">
+          <div class="intro-progress-bar" id="intro-progress-bar"></div>
+        </div>
+
+        <button id="begin-btn" class="neon-btn begin-btn screen-hidden">
+          <span class="neon-btn__text">🔍 BEGIN INVESTIGATION</span>
+          <span class="neon-btn__glow"></span>
+          <span class="neon-btn__border"></span>
+        </button>
+
+        <button id="skip-btn" class="skip-btn">SKIP INTRO ▸▸</button>
+      </div>
+    </div>
+
+    <!-- ========== MAIN GAME SCENE ========== -->
+    <div id="game-scene" class="screen-hidden">
+
+      <div id="lineup-wall">
+        <div class="height-markers">
+          <span>6'</span><span>5'</span><span>4'</span><span>3'</span>
+        </div>
+        <div class="wall-lines"></div>
+        <div class="spotlight"></div>
+        <div class="spotlight spotlight-2"></div>
+      </div>
+
+      <div id="suspects-lineup"></div>
+      <div class="glass-overlay"></div>
+
+      <!-- AI Detective Avatar — click to open partner overlay -->
+      <div id="detective-avatar" class="detective-avatar" title="Talk to your partner">
+        <img src="./assets/characters/detective/mouth_closed.png" id="detective-img" alt="Detective Agent">
+      </div>
+
+      <div id="desk-foreground">
+        <div class="desk-surface">
+          <div class="desk-item briefing-book-btn" id="briefing-book-btn" title="Case Briefing">📖</div>
+        </div>
+      </div>
+
+      <div id="hud">
+        <div class="hud-left">
+          <span class="hud-badge">🕵️ DETECTIVE</span>
+          <span class="hud-case" id="hud-case">Case #----</span>
+        </div>
+        <div class="hud-right">
+          <span class="hud-timer" id="hud-timer">⏱ 00:00</span>
+          <span class="hud-suspects-left" id="hud-suspects">5 Suspects Remaining</span>
+          <button id="verdict-btn" class="hud-verdict-btn">⚖️ FILE VERDICT</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ========== DETECTIVE PARTNER OVERLAY ========== -->
+    <div id="detective-overlay" class="overlay screen-hidden">
+      <div class="detective-room">
+
+        <button id="detective-back-btn" class="btn-back">← Back to Lineup</button>
+
+        <div class="detective-split">
+
+          <!-- Left: Detective character standing full body -->
+          <div class="detective-char-side">
+            <div class="detective-char-wrap" id="detective-char-wrap">
+              <img id="detective-overlay-img" src="./assets/characters/detective/mouth_closed.png" alt="Detective"
+                class="detective-char-img" />
+              <div class="detective-char-glow"></div>
+            </div>
+            <div class="detective-name-tag">DETECTIVE AGENT</div>
+          </div>
+
+          <!-- Right: Info panel -->
+          <div class="detective-info-side">
+
+            <div class="detective-info-header">
+              <div class="detective-info-label">PARTNER STATUS</div>
+              <div class="detective-info-status">
+                <span class="detective-status-dot"></span>
+                <span class="detective-status-text">ACTIVE — ANALYZING CASE</span>
+              </div>
+            </div>
+
+            <div class="detective-info-divider"></div>
+
+            <div class="detective-hint-box">
+              <div class="detective-hint-label">PARTNER INTEL</div>
+              <p class="detective-hint-text" id="detective-hint-text">Your partner is observing the lineup...</p>
+            </div>
+
+            <div class="detective-info-divider"></div>
+
+            <div class="detective-stats-grid">
+              <div class="detective-stat">
+                <div class="detective-stat-label">SUSPECTS</div>
+                <div class="detective-stat-value" id="partner-suspects">5</div>
+              </div>
+              <div class="detective-stat">
+                <div class="detective-stat-label">TIME</div>
+                <div class="detective-stat-value" id="partner-time">00:00</div>
+              </div>
+              <div class="detective-stat">
+                <div class="detective-stat-label">DIFFICULTY</div>
+                <div class="detective-stat-value" id="partner-diff">—</div>
+              </div>
+              <div class="detective-stat">
+                <div class="detective-stat-label">MODE</div>
+                <div class="detective-stat-value" id="partner-mode">—</div>
+              </div>
+            </div>
+
+            <div class="detective-info-divider"></div>
+
+            <div id="partner-text-container" class="partner-text-container screen-hidden">
+              <input type="text" id="partner-text-input" placeholder="Type your task..." autocomplete="off">
+              <button id="partner-send-btn" class="btn-send">Send</button>
+            </div>
+            <button class="detective-ask-btn" id="detective-ask-btn">
+              <span>🎙️</span>
+              <span>ASK YOUR PARTNER</span>
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== INTERROGATION OVERLAY ========== -->
+    <div id="interrogation-overlay" class="overlay screen-hidden">
+      <div class="interrogation-room">
+
+        <button id="back-btn" class="btn-back">
+          ← Back to Lineup
+        </button>
+
+        <div id="interrogation-suspect">
+          <img id="suspect-closeup" src="" alt="Suspect" />
+          <div id="suspect-name-tag" class="name-tag"></div>
+          <!-- Suspect Profile Toggle -->
+          <button id="suspect-profile-toggle" class="suspect-profile-toggle" title="View Suspect Profile">📋</button>
+        </div>
+
+        <!-- Suspect Profile Panel (slides in from right) -->
+        <div id="suspect-profile-panel" class="suspect-profile-panel screen-hidden">
+          <button id="suspect-profile-close" class="suspect-profile-close">✕</button>
+          <div class="suspect-profile-content">
+            <h3 class="suspect-profile__title" id="profile-name">—</h3>
+            <div class="suspect-profile__details" id="profile-details"></div>
+          </div>
+        </div>
+
+        <div id="dialogue-area">
+          <div id="dialogue-box">
+            <div class="questions-remaining" id="questions-remaining">QUESTIONS LEFT: <span id="q-left-val">--</span>
+            </div>
+            <p id="dialogue-text">Click the mic to start interrogating...</p>
+          </div>
+          <div class="dialogue-controls">
+            <div id="text-input-container" class="text-input-container screen-hidden">
+              <input type="text" id="interrogation-text-input" placeholder="Type your question..." autocomplete="off">
+              <button id="send-btn" class="btn-send">Send</button>
+            </div>
+            <button id="mic-btn" class="btn-mic" title="Hold to speak">🎙️</button>
+            <button id="mic-mute-btn" class="btn-mute" title="Mute/Unmute Microphone">🎤</button>
+            <button id="punch-btn" class="btn-punch" title="Intimidate Suspect">👊</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ========== EVIDENCE RECAP ========== -->
+    <div id="evidence-recap" class="overlay screen-hidden">
+      <div class="scanlines"></div>
+      <div class="noise-overlay"></div>
+      <div class="verdict-screen">
+        <div class="select-header">
+          <button class="select-back" id="recap-back">← BACK TO LINEUP</button>
+          <div class="select-step">FINAL SUBMISSION</div>
+          <h2 class="select-title">EVIDENCE<br>BOARD</h2>
+          <p class="select-subtitle">Review your findings before filing your verdict</p>
+        </div>
+
+        <div class="recap-suspects" id="recap-suspects"></div>
+
+        <div class="recap-footer">
+          <div class="recap-timer">⏱ TIME: <span id="recap-time">00:00</span></div>
+          <button id="proceed-accuse-btn" class="neon-btn">
+            <span class="neon-btn__text">MAKE YOUR ACCUSATION</span>
+            <span class="neon-btn__glow"></span>
+            <span class="neon-btn__border"></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="corner-deco corner-tl"></div>
+      <div class="corner-deco corner-tr"></div>
+      <div class="corner-deco corner-bl"></div>
+      <div class="corner-deco corner-br"></div>
+    </div>
+
+    <!-- ========== ACCUSATION SCREEN ========== -->
+    <div id="accusation-screen" class="overlay screen-hidden">
+      <div class="scanlines"></div>
+      <div class="noise-overlay"></div>
+      <div class="verdict-screen accusation-form-screen">
+        <div class="select-header">
+          <button class="select-back" id="accuse-back">← BACK</button>
+          <div class="select-step">FINAL SUBMISSION</div>
+          <h2 class="select-title">🔍 FILE YOUR<br>ACCUSATION</h2>
+          <p class="select-subtitle">Present your case to the Judge. Choose wisely — once submitted, the case is closed.
+          </p>
+        </div>
+
+        <div class="accusation-form" id="accusation-form">
+          <div class="accusation-fields-grid">
+            <!-- WHO field -->
+            <div class="accuse-field" data-area="who">
+              <label class="accuse-field__label" data-num="01" for="accuse-who">WHO did it?</label>
+              <select id="accuse-who" class="accuse-field__select">
+                <option value="" disabled selected>Select a suspect...</option>
+              </select>
+            </div>
+
+            <!-- WHY field -->
+            <div class="accuse-field" data-area="why">
+              <label class="accuse-field__label" data-num="02" for="accuse-why">WHY did they do it? <span
+                  class="accuse-field__hint">(Motive)</span></label>
+              <textarea id="accuse-why" class="accuse-field__textarea"
+                placeholder="Describe the motive — why did they commit this crime?"></textarea>
+              <div class="accuse-field__counter"><span id="why-char-count">0</span> / 10 min</div>
+            </div>
+
+            <!-- HOW field -->
+            <div class="accuse-field" data-area="how">
+              <label class="accuse-field__label" data-num="03" for="accuse-how">HOW did they do it? <span
+                  class="accuse-field__hint">(Method)</span></label>
+              <textarea id="accuse-how" class="accuse-field__textarea"
+                placeholder="Describe the method — how was the crime carried out?"></textarea>
+              <div class="accuse-field__counter"><span id="how-char-count">0</span> / 10 min</div>
+            </div>
+          </div>
+
+          <button id="submit-verdict-btn" class="verdict-submit-btn" disabled>
+            <span class="verdict-submit-icon">⚖️</span>
+            <span id="submit-verdict-text">SUBMIT ACCUSATION</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="corner-deco corner-tl"></div>
+      <div class="corner-deco corner-tr"></div>
+      <div class="corner-deco corner-bl"></div>
+      <div class="corner-deco corner-br"></div>
+    </div>
+
+    <!-- ========== BRIEFING BOOK OVERLAY ========== -->
+    <div id="book-briefing-overlay" class="overlay screen-hidden" style="z-index: 250;">
+      <div class="briefing-paper" style="max-height: 80vh; overflow-y: auto; padding: 3rem; position: relative;">
+        <h2
+          style="font-family: var(--font-display); color: var(--red); margin-bottom: 20px; font-size: 2rem; border-bottom: 2px solid var(--red); padding-bottom: 10px;">
+          CASE BRIEFING</h2>
+        <div id="book-briefing-text"
+          style="font-family: var(--font-body); font-size: 1.1rem; line-height: 1.8; color: var(--gray-100); margin-bottom: 30px; white-space: pre-wrap;">
+        </div>
+        <button id="close-book-btn" class="neon-btn" style="width: 100%;">
+          <span class="neon-btn__text">CLOSE CASE FILE</span>
+          <span class="neon-btn__glow"></span>
+          <span class="neon-btn__border"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ========== CONFIRMATION MODAL ========== -->
+    <div id="confirm-modal" class="confirm-modal screen-hidden">
+      <div class="confirm-modal__backdrop"></div>
+      <div class="confirm-modal__box">
+        <div class="confirm-modal__icon">⚠️</div>
+        <h3 class="confirm-modal__title">Are you sure?</h3>
+        <p class="confirm-modal__text">Once you submit your accusation, the case is closed. There's no going back,
+          Detective.</p>
+        <div class="confirm-modal__actions">
+          <button id="confirm-cancel" class="confirm-modal__btn confirm-modal__btn--cancel">Go Back</button>
+          <button id="confirm-submit" class="confirm-modal__btn confirm-modal__btn--submit">⚖️ Submit Final
+            Verdict</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== VERDICT REVEAL — JUDGE LOADING ========== -->
+    <div id="verdict-reveal" class="overlay screen-hidden">
+      <div class="scanlines"></div>
+      <div class="noise-overlay"></div>
+
+      <div class="judge-loading-screen">
+        <div class="judge-loading-icon">
+          <img src="./public/assets/judge/judge.png" alt="Judge" class="judge-loading-img" />
+        </div>
+        <p class="judge-loading-text" id="verdict-loading">The Judge is reviewing your case file...</p>
+        <div class="judge-loading-bar">
+          <div class="judge-loading-bar__fill" id="judge-loading-fill"></div>
+        </div>
+        <p class="judge-loading-flavor" id="judge-loading-flavor">Analyzing evidence...</p>
+      </div>
+    </div>
+
+    <!-- ========== CINEMATIC CREDITS REVEAL ========== -->
+    <div id="credits-reveal" class="overlay screen-hidden">
+      <div class="scanlines"></div>
+      <div class="noise-overlay"></div>
+
+      <div class="verdict-split">
+
+        <!-- LEFT: Stamp + suspect reveal -->
+        <div class="verdict-left-panel">
+          <div class="verdict-corner-tl"></div>
+          <div class="verdict-corner-br"></div>
+
+          <div class="verdict-result">
+            <div class="verdict-stamp" id="credits-verdict-stamp"></div>
+            <p class="verdict-text" id="credits-verdict-text"></p>
+            <div id="credits-suspect-reveal"></div>
+          </div>
+
+          <button id="credits-continue-btn" class="neon-btn verdict-continue screen-hidden" style="margin-top:2rem;">
+            <span class="neon-btn__text">📋 VIEW CASE REPORT</span>
+            <span class="neon-btn__glow"></span>
+            <span class="neon-btn__border"></span>
+          </button>
+        </div>
+
+        <!-- RIGHT: Scrolling film credits -->
+        <div class="credits-panel">
+          <div class="credits-vignette-top"></div>
+          <div class="credits-scroll" id="credits-scroll"></div>
+          <div class="credits-vignette-bottom"></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ========== JUDGE'S VERDICT SCREEN ========== -->
+    <div id="postgame" class="overlay screen-hidden">
+      <div class="scanlines"></div>
+      <div class="noise-overlay"></div>
+
+      <div class="judge-verdict-screen" id="judge-verdict-screen">
+        <div class="judge-verdict-scroll">
+
+          <!-- Banner -->
+          <div class="jv-banner" id="jv-banner">
+            <div class="jv-banner__icon">⚖️</div>
+            <h2 class="jv-banner__title" id="jv-banner-title">JUDGE'S VERDICT</h2>
+            <p class="jv-banner__subtitle" id="jv-banner-subtitle"></p>
+          </div>
+
+          <!-- Total Score -->
+          <div class="jv-score-section" id="jv-score-section">
+            <div class="jv-total-score">
+              <span class="jv-total-score__label">TOTAL SCORE</span>
+              <span class="jv-total-score__value" id="jv-total-score">0</span>
+              <span class="jv-total-score__max">/ 100</span>
+            </div>
+            <div class="jv-progress-bar">
+              <div class="jv-progress-bar__fill" id="jv-progress-fill"></div>
+            </div>
+          </div>
+
+          <!-- Zero-Sum Rule Warning (hidden by default) -->
+          <div class="jv-zero-sum screen-hidden" id="jv-zero-sum">
+            <span class="jv-zero-sum__icon">🚫</span>
+            <p class="jv-zero-sum__text">You accused the wrong person. Under the <strong>Zero-Sum Rule</strong>, your
+              total score is 0.</p>
+          </div>
+
+          <!-- Sub-Score Cards -->
+          <div class="jv-subscores">
+            <div class="jv-subscore-card" id="jv-who-card">
+              <div class="jv-subscore-card__header">WHO</div>
+              <div class="jv-subscore-card__score"><span id="jv-who-score">0</span> / 25</div>
+              <div class="jv-subscore-card__icon" id="jv-who-icon">❌</div>
+            </div>
+            <div class="jv-subscore-card" id="jv-why-card">
+              <div class="jv-subscore-card__header">WHY</div>
+              <div class="jv-subscore-card__score"><span id="jv-why-score">0</span> / 50</div>
+              <div class="jv-subscore-card__icon" id="jv-why-icon">⚠️</div>
+            </div>
+            <div class="jv-subscore-card" id="jv-how-card">
+              <div class="jv-subscore-card__header">HOW</div>
+              <div class="jv-subscore-card__score"><span id="jv-how-score">0</span> / 25</div>
+              <div class="jv-subscore-card__icon" id="jv-how-icon">❌</div>
+            </div>
+          </div>
+
+          <!-- Quick Truth Summary (compact, grey text) -->
+          <div class="jv-mini-truth">
+            <div class="jv-mini-line">
+              <span class="jv-mini-label">Motive</span>
+              <span class="jv-mini-value" id="jv-mini-motive">—</span>
+            </div>
+            <div class="jv-mini-line">
+              <span class="jv-mini-label">Key Evidence</span>
+              <span class="jv-mini-value" id="jv-mini-evidence">—</span>
+            </div>
+          </div>
+
+          <!-- Marking Breakdown -->
+          <div class="jv-section">
+            <div class="jv-section__header">📋 MARKING BREAKDOWN</div>
+            <div class="jv-section__body jv-marking-list" id="jv-marking"></div>
+          </div>
+
+          <!-- PDF Report Download Section -->
+          <div class="jv-section">
+            <div class="jv-section__header" style="opacity: 0.7; letter-spacing: 2px;">📄 DETAILED REPORT</div>
+            <div class="jv-section__controls" style="margin-top: 1rem; text-align: center;">
+              <button id="download-report-btn" class="neon-btn jv-download-btn" style="width:100%;">
+                <span class="neon-btn__text">⬇️ DOWNLOAD THINKING SKILLS REPORT & ANALYSIS</span>
+                <span class="neon-btn__glow"></span>
+                <span class="neon-btn__border"></span>
+              </button>
+            </div>
+          </div>
+
+          <!-- The Truth -->
+          <div class="jv-section jv-truth-section">
+            <div class="jv-section__header">── THE TRUTH ──</div>
+            <div class="jv-truth-grid" id="jv-truth">
+              <div class="jv-truth-item"><span class="jv-truth-label">Culprit</span><span class="jv-truth-value"
+                  id="jv-truth-culprit">—</span></div>
+              <div class="jv-truth-item"><span class="jv-truth-label">Motive</span><span class="jv-truth-value"
+                  id="jv-truth-motive">—</span></div>
+              <div class="jv-truth-item"><span class="jv-truth-label">Method</span><span class="jv-truth-value"
+                  id="jv-truth-method">—</span></div>
+              <div class="jv-truth-item"><span class="jv-truth-label">Key Evidence</span><span class="jv-truth-value"
+                  id="jv-truth-evidence">—</span></div>
+            </div>
+          </div>
+
+          <!-- Play Again -->
+          <div class="jv-footer">
+            <button id="play-again-btn" class="neon-btn">
+              <span class="neon-btn__text">🔄 PLAY AGAIN</span>
+              <span class="neon-btn__glow"></span>
+              <span class="neon-btn__border"></span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ========== SCREEN TRANSITION FLASH ========== -->
+    <div id="screen-flash" class="screen-flash"></div>
+
+  </div>
+
+  <script type="module" src="/main.js"></script>
+</body>
+
+</html>

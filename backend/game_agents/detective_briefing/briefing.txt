@@ -1,0 +1,32 @@
+The Case of the Placement Poison
+======================================================================
+
+You are called to the student wellness clinic at the Indian Institute of Technology, Bombay, on a tense morning during final placement week. Kabir Malhotra, a 22-year-old final-year CSE student and placement batch topper, was a charismatic and humble Dalit scholarship student hailed as a symbol of social mobility and meritocracy, making his sudden death a significant loss. He was found collapsed after receiving a routine 'vitamin B12' injection during a pre-placement medical check-up, and was pronounced dead on arrival with symptoms resembling a sudden diabetic shock. The incident appears to be a tragic medical accident, but the police have reason to believe otherwise, as Kabir's private life was more complex than his public image suggested, and the circumstances surrounding his death don't entirely add up. With the police unsure what to make of the conflicting evidence, you've been brought in to investigate further. Five suspects have been identified.
+
+======================================================================
+SUSPECT PROFILES:
+------------------------------
+
+Dr. Ananya Iyer
+Role: Head of Student Wellness, Endocrinology Specialist
+Age: 48
+
+Rohan Mehta
+Role: Clinic nursing intern
+Age: 21
+
+Vikram Desai
+Role: Rival student, second in placement rankings
+Age: 23
+
+Priya Nair
+Role: Kabir’s lab partner and close friend
+Age: 20
+
+Baba Jee
+Role: Campus chaiwallah and unofficial counselor
+Age: 72
+
+======================================================================
+Total Suspects: 5
+Evidence pieces: 4

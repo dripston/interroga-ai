@@ -1,0 +1,58 @@
+{
+  "case_title": "The Case of the Placement Poison",
+  "difficulty": "easy",
+  "setting": {
+    "location": "Department of Computer Science, Indian Institute of Technology, Bombay (IIT-B), in the student wellness clinic during final placement week",
+    "atmosphere": "The air hums with tension—students pace with resumes in hand, caffeine-stained mugs litter benches, and the scent of antiseptic from the clinic mixes with nervous sweat. Fluorescent lights flicker above silent group chats exploding with placement updates."
+  },
+  "briefing_text": "You are called to the student wellness clinic at the Indian Institute of Technology, Bombay, on a tense morning during final placement week. Kabir Malhotra, a 22-year-old final-year CSE student and placement batch topper, was a charismatic and humble Dalit scholarship student hailed as a symbol of social mobility and meritocracy, making his sudden death a significant loss. He was found collapsed after receiving a routine 'vitamin B12' injection during a pre-placement medical check-up, and was pronounced dead on arrival with symptoms resembling a sudden diabetic shock. The incident appears to be a tragic medical accident, but the police have reason to believe otherwise, as Kabir's private life was more complex than his public image suggested, and the circumstances surrounding his death don't entirely add up. With the police unsure what to make of the conflicting evidence, you've been brought in to investigate further. Five suspects have been identified.",
+  "initial_information": {
+    "crime": {
+      "type": "poisoning",
+      "what_happened": "Kabir Malhotra, a top student, collapsed during a pre-placement medical check-up after receiving a routine 'vitamin B12' injection. He was pronounced dead on arrival with symptoms resembling a sudden diabetic shock.",
+      "hidden_truth": "Kabir was murdered with a lethal dose of insulin injected under the guise of a vitamin shot. The killer exploited clinic procedures and a forged medical file to ensure he received the fatal dose."
+    },
+    "victim": {
+      "name": "Kabir Malhotra",
+      "age": 22,
+      "role": "Final-year CSE student, placement batch topper",
+      "public_image": "A charismatic, humble Dalit scholarship student hailed as a symbol of social mobility and meritocracy.",
+      "private_reality": "He was blackmailing a professor with proof of forged adoption papers that revealed his true upper-caste lineage—papers he planned to expose to destroy her reputation.",
+      "connection_to_culprit": "He was the biological son of the culprit, who gave him up at birth to avoid caste stigma and later rose to power as a professor at the same institute."
+    },
+    "time_window": "2:30 PM - 4:00 PM",
+    "location": {
+      "location": "Department of Computer Science, Indian Institute of Technology, Bombay (IIT-B), in the student wellness clinic during final placement week",
+      "atmosphere": "The air hums with tension—students pace with resumes in hand, caffeine-stained mugs litter benches, and the scent of antiseptic from the clinic mixes with nervous sweat. Fluorescent lights flicker above silent group chats exploding with placement updates."
+    }
+  },
+  "suspects_overview": [
+    {
+      "name": "Dr. Ananya Iyer",
+      "role": "Head of Student Wellness, Endocrinology Specialist",
+      "age": 48
+    },
+    {
+      "name": "Rohan Mehta",
+      "role": "Clinic nursing intern",
+      "age": 21
+    },
+    {
+      "name": "Vikram Desai",
+      "role": "Rival student, second in placement rankings",
+      "age": 23
+    },
+    {
+      "name": "Priya Nair",
+      "role": "Kabir’s lab partner and close friend",
+      "age": 20
+    },
+    {
+      "name": "Baba Jee",
+      "role": "Campus chaiwallah and unofficial counselor",
+      "age": 72
+    }
+  ],
+  "evidence_count": 4,
+  "generated_at": "2026-02-23T01:17:39.965407"
+}

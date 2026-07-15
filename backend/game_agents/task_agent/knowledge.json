@@ -1,0 +1,88 @@
+{
+  "case_title": "The Case of the Placement Poison",
+  "case_difficulty": "easy",
+  "setting": {
+    "location": "Department of Computer Science, Indian Institute of Technology, Bombay (IIT-B), in the student wellness clinic during final placement week",
+    "atmosphere": "The air hums with tension—students pace with resumes in hand, caffeine-stained mugs litter benches, and the scent of antiseptic from the clinic mixes with nervous sweat. Fluorescent lights flicker above silent group chats exploding with placement updates."
+  },
+  "crime": {
+    "type": "poisoning",
+    "what_happened": "Kabir Malhotra, a top student, collapsed during a pre-placement medical check-up after receiving a routine 'vitamin B12' injection. He was pronounced dead on arrival with symptoms resembling a sudden diabetic shock."
+  },
+  "victim": {
+    "name": "Kabir Malhotra",
+    "age": 22,
+    "role": "Final-year CSE student, placement batch topper",
+    "public_image": "A charismatic, humble Dalit scholarship student hailed as a symbol of social mobility and meritocracy."
+  },
+  "time_window": "2:30 PM - 4:00 PM",
+  "all_suspects": [
+    {
+      "name": "Dr. Ananya Iyer",
+      "role": "Head of Student Wellness, Endocrinology Specialist",
+      "age": 48,
+      "alibi_verified": false
+    },
+    {
+      "name": "Rohan Mehta",
+      "role": "Clinic nursing intern",
+      "age": 21,
+      "alibi_verified": true
+    },
+    {
+      "name": "Vikram Desai",
+      "role": "Rival student, second in placement rankings",
+      "age": 23,
+      "alibi_verified": false
+    },
+    {
+      "name": "Priya Nair",
+      "role": "Kabir’s lab partner and close friend",
+      "age": 20,
+      "alibi_verified": true
+    },
+    {
+      "name": "Baba Jee",
+      "role": "Campus chaiwallah and unofficial counselor",
+      "age": 72,
+      "alibi_verified": true
+    }
+  ],
+  "timeline": [
+    {
+      "time": "2:30 PM",
+      "event": "Kabir arrives at wellness clinic for pre-placement check-up."
+    },
+    {
+      "time": "2:45 PM",
+      "event": "Dr. Iyer reviews his file and orders a 'vitamin boost' injection."
+    },
+    {
+      "time": "3:00 PM",
+      "event": "Rohan Mehta prepares syringe from labeled 'Vitamin B12' vial."
+    },
+    {
+      "time": "3:08 PM",
+      "event": "Injection administered in Room 3B."
+    },
+    {
+      "time": "3:12 PM",
+      "event": "Kabir collapses; nurse calls emergency."
+    },
+    {
+      "time": "3:25 PM",
+      "event": "Ambulance departs; Kabir pronounced dead at hospital."
+    },
+    {
+      "time": "4:00 PM",
+      "event": "Campus police notified; investigation begins."
+    }
+  ],
+  "available_actions": [
+    "check_cctv [location]",
+    "review_logs [system/type]",
+    "check_phone_records [person]",
+    "examine_forensics [item]",
+    "inspect_item [item_id]"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "ai-detective-game",
+  "version": "1.0.0",
+  "description": "An AI-powered detective game using LangGraph, FastAPI, and Vite.",
+  "private": true,
+  "scripts": {
+    "install:all": "npm run install:frontend && npm run install:backend",
+    "install:frontend": "cd frontend && npm install",
+    "install:backend": "cd backend && python -m venv venv && venv\\Scripts\\activate && pip install -r requirements.txt",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && venv\\Scripts\\activate && python server.py",
+    "start": "echo \"Run 'npm run dev:frontend' in one terminal and 'npm run dev:backend' in another!\""
+  },
+  "keywords": [
+    "ai-detective",
+    "fastapi",
+    "langgraph",
+    "vite",
+    "monorepo"
+  ],
+  "author": "Rehaan",
+  "license": "ISC"
+}

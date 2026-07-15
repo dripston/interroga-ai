@@ -1,0 +1,44 @@
+# ─── Node / Frontend ────────────────────────────────────────────────────────
+node_modules/
+dist/
+.npm/
+package-lock.json
+
+# ─── Python / Backend ───────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+ENV/
+
+# ─── Secrets ────────────────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ─── Game Session Data (generated at runtime) ───────────────────────────────
+backend/game_agents_*/
+backend/current_game.json
+backend/session_usage.json
+backend/game_case_v2_*.json
+backend/mystery_rag_index/
+backend/embedding_cache/
+
+# ─── Debug / Log Files ──────────────────────────────────────────────────────
+backend/debug_v2_*.txt
+backend/*.log
+backend/test_output.txt
+backend/task_test_results.txt
+backend/test_results.txt
+
+# ─── OS / Editor ────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+NUL

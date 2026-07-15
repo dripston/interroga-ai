@@ -1,0 +1,71 @@
+{
+  "hint_triggers": {
+    "stuck_at_start": {
+      "after_rounds": 3,
+      "condition": "player_hasnt_investigated_evidence",
+      "hint": "You should start by examining the physical evidence collected from the scene.",
+      "suggests": [
+        "Examine evidence",
+        "List available evidence"
+      ]
+    },
+    "stuck_with_obvious_suspect": {
+      "after_rounds": 5,
+      "condition": "player_suspects_culprit_but_hasnt_checked_alibi",
+      "hint": "Have you verified the suspects' alibis? CCTV footage, witness statements, and security logs might be available.",
+      "suggests": [
+        "Check CCTV footage",
+        "Review alibis",
+        "Interview witnesses"
+      ]
+    },
+    "fooled_by_alibi": {
+      "after_rounds": 8,
+      "condition": "player_ruled_out_culprit",
+      "hint": "Dr. Ananya Iyer's alibi seems solid, but evidence can be fabricated. Can you verify its authenticity?",
+      "suggests": [
+        "Check CCTV metadata",
+        "Cross-reference with weather data",
+        "Verify timestamps"
+      ]
+    },
+    "found_flaw_need_accomplice": {
+      "after_rounds": 11,
+      "condition": "player_found_alibi_flaw",
+      "hint": "You've found a flaw in Dr. Ananya Iyer's alibi. Someone must have helped them fake it.",
+      "suggests": [
+        "Review financial records",
+        "Check who had access to security systems"
+      ]
+    },
+    "almost_solved": {
+      "after_rounds": 13,
+      "condition": "player_has_most_evidence",
+      "hint": "You have most of the pieces. Who had motive, means, and opportunity?",
+      "suggests": [
+        "Review all findings",
+        "Connect the dots",
+        "Identify accomplice"
+      ]
+    }
+  },
+  "progressive_unlocks": {
+    "after_viewing_evidence": [
+      "Technical analysis",
+      "Cross-reference tool"
+    ],
+    "after_viewing_cctv": [
+      "Metadata analysis",
+      "Weather cross-reference",
+      "Timestamp verification"
+    ],
+    "after_finding_contradiction": [
+      "Deep investigation mode",
+      "Financial records access"
+    ],
+    "after_suspecting_someone": [
+      "Subject-specific financial records",
+      "Subject-specific communications"
+    ]
+  }
+}

@@ -1,0 +1,232 @@
+{
+  "total_sources": 14,
+  "sources_by_type": {
+    "evidence": 4,
+    "cctv_footage": 2,
+    "digital_log": 5,
+    "witness_testimony": 0,
+    "security_record": 0,
+    "physical_trace": 0
+  },
+  "sources": [
+    {
+      "id": "evidence_1",
+      "source_type": "evidence",
+      "evidence_type": "Forensic",
+      "query_keywords": [
+        "forensic lab, mumbai",
+        "forensic",
+        "log",
+        "blood",
+        "report"
+      ],
+      "description": "Toxicology report shows lethal insulin levels in Kabir’s blood; no history of diabetes.",
+      "location": "Forensic lab, Mumbai",
+      "discovered_through": "Autopsy and blood analysis ordered by investigating officer.",
+      "significance": "Confirms murder by insulin overdose.",
+      "misleading": false,
+      "mentioned_by": [],
+      "investigated": false,
+      "findings": "Forensic report on: Toxicology report shows lethal insulin levels in Kabir’s blood; no history of diabetes.. Found at: Forensic lab, Mumbai. Significance: Confirms murder by insulin overdose.."
+    },
+    {
+      "id": "evidence_2",
+      "source_type": "evidence",
+      "evidence_type": "Physical",
+      "query_keywords": [
+        "clinic biohazard bin",
+        "physical"
+      ],
+      "description": "Used syringe with trace insulin residue; vial labeled 'Vitamin B12' was actually insulin.",
+      "location": "Clinic biohazard bin",
+      "discovered_through": "Forensic sweep of clinic waste by crime scene unit.",
+      "significance": "Proves substitution of medication.",
+      "misleading": false,
+      "mentioned_by": [],
+      "investigated": false,
+      "findings": "Forensic report on: Used syringe with trace insulin residue; vial labeled 'Vitamin B12' was actually insulin.. Found at: Clinic biohazard bin. Significance: Proves substitution of medication.."
+    },
+    {
+      "id": "evidence_3",
+      "source_type": "evidence",
+      "evidence_type": "Digital",
+      "query_keywords": [
+        "recovery from kabir’s cloud backup",
+        "digital"
+      ],
+      "description": "Deleted draft email from Kabir to the Dean titled 'Truth About My Adoption' with attached forged documents.",
+      "location": "Recovery from Kabir’s cloud backup",
+      "discovered_through": "Digital forensics team restored deleted files from student server.",
+      "significance": "Reveals motive—Kabir planned to expose Dr. Iyer.",
+      "misleading": false,
+      "mentioned_by": [],
+      "investigated": false,
+      "findings": "Forensic report on: Deleted draft email from Kabir to the Dean titled 'Truth About My Adoption' with attached forged documents.. Found at: Recovery from Kabir’s cloud backup. Significance: Reveals motive—Kabir planned to expose Dr. Iyer.."
+    },
+    {
+      "id": "evidence_4",
+      "source_type": "evidence",
+      "evidence_type": "Testimonial",
+      "query_keywords": [
+        "east gate chai stall",
+        "testimonial"
+      ],
+      "description": "Baba Jee’s statement about overhearing Dr. Iyer’s argument with Kabir.",
+      "location": "East gate chai stall",
+      "discovered_through": "Routine witness interview near incident site.",
+      "significance": "Places Dr. Iyer in emotional conflict with victim.",
+      "misleading": false,
+      "mentioned_by": [],
+      "investigated": false,
+      "findings": "Forensic report on: Baba Jee’s statement about overhearing Dr. Iyer’s argument with Kabir.. Found at: East gate chai stall. Significance: Places Dr. Iyer in emotional conflict with victim.."
+    },
+    {
+      "id": "alibi_source_5",
+      "source_type": "digital_log",
+      "query_keywords": [
+        "log",
+        "dr.",
+        "dr. ananya iyer",
+        "clinic",
+        "office",
+        "login"
+      ],
+      "related_to_suspect": "Dr. Ananya Iyer",
+      "alibi_verified": false,
+      "description": "Security log showing login to clinic server at 3:15 PM for Dr. Ananya Iyer",
+      "investigated": false,
+      "findings": "Checked Security log showing login to clinic server at 3:15 PM for Dr. Ananya Iyer. Timestamp: 3:08 PM."
+    },
+    {
+      "id": "alibi_source_6",
+      "source_type": "cctv_footage",
+      "query_keywords": [
+        "footage",
+        "dr.",
+        "dr. ananya iyer",
+        "office",
+        "corridor"
+      ],
+      "related_to_suspect": "Dr. Ananya Iyer",
+      "alibi_verified": false,
+      "description": "Corridor CCTV showing a figure in white coat entering her office at 3:10 PM (low resolution) for Dr. Ananya Iyer",
+      "investigated": true,
+      "findings": "Checked Corridor CCTV showing a figure in white coat entering her office at 3:10 PM (low resolution) for Dr. Ananya Iyer. Timestamp: 3:08 PM."
+    },
+    {
+      "id": "alibi_source_7",
+      "source_type": "digital_log",
+      "query_keywords": [
+        "log",
+        "rohan",
+        "rohan mehta"
+      ],
+      "related_to_suspect": "Rohan Mehta",
+      "alibi_verified": true,
+      "description": "Cafeteria swipe card timestamp at 3:12 PM for Rohan Mehta",
+      "investigated": false,
+      "findings": "Checked Cafeteria swipe card timestamp at 3:12 PM for Rohan Mehta. Timestamp: 2:30 PM."
+    },
+    {
+      "id": "alibi_source_8",
+      "source_type": "other_verification",
+      "query_keywords": [
+        "verification",
+        "rohan",
+        "rohan mehta"
+      ],
+      "related_to_suspect": "Rohan Mehta",
+      "alibi_verified": true,
+      "description": "Three classmates confirm seeing him eating samosas for Rohan Mehta",
+      "investigated": false,
+      "findings": "Checked Three classmates confirm seeing him eating samosas for Rohan Mehta. Timestamp: 2:30 PM."
+    },
+    {
+      "id": "alibi_source_9",
+      "source_type": "digital_log",
+      "query_keywords": [
+        "log",
+        "vikram",
+        "vikram desai"
+      ],
+      "related_to_suspect": "Vikram Desai",
+      "alibi_verified": false,
+      "description": "Library log-in at 3:05 PM for Vikram Desai",
+      "investigated": false,
+      "findings": "Checked Library log-in at 3:05 PM for Vikram Desai. Timestamp: 3:08 PM."
+    },
+    {
+      "id": "alibi_source_10",
+      "source_type": "cctv_footage",
+      "query_keywords": [
+        "footage",
+        "vikram",
+        "vikram desai"
+      ],
+      "related_to_suspect": "Vikram Desai",
+      "alibi_verified": false,
+      "description": "Empty seat in Camera 4 blind spot between 3:10–3:20 PM for Vikram Desai",
+      "investigated": true,
+      "findings": "Checked Empty seat in Camera 4 blind spot between 3:10–3:20 PM for Vikram Desai. Timestamp: 3:08 PM."
+    },
+    {
+      "id": "alibi_source_11",
+      "source_type": "digital_log",
+      "query_keywords": [
+        "log",
+        "priya",
+        "priya nair"
+      ],
+      "related_to_suspect": "Priya Nair",
+      "alibi_verified": true,
+      "description": "Presentation timestamp logged at 3:14 PM for Priya Nair",
+      "investigated": false,
+      "findings": "Checked Presentation timestamp logged at 3:14 PM for Priya Nair. Timestamp: 2:30 PM."
+    },
+    {
+      "id": "alibi_source_12",
+      "source_type": "other_verification",
+      "query_keywords": [
+        "verification",
+        "priya",
+        "priya nair"
+      ],
+      "related_to_suspect": "Priya Nair",
+      "alibi_verified": true,
+      "description": "Professor’s attendance sheet with signature for Priya Nair",
+      "investigated": false,
+      "findings": "Checked Professor’s attendance sheet with signature for Priya Nair. Timestamp: 2:30 PM."
+    },
+    {
+      "id": "alibi_source_13",
+      "source_type": "other_verification",
+      "query_keywords": [
+        "verification",
+        "baba",
+        "baba jee",
+        "gate"
+      ],
+      "related_to_suspect": "Baba Jee",
+      "alibi_verified": true,
+      "description": "Multiple student testimonies for Baba Jee",
+      "investigated": false,
+      "findings": "Checked Multiple student testimonies for Baba Jee. Timestamp: 2:30 PM."
+    },
+    {
+      "id": "alibi_source_14",
+      "source_type": "digital_log",
+      "query_keywords": [
+        "log",
+        "baba",
+        "baba jee",
+        "gate",
+        "receipt"
+      ],
+      "related_to_suspect": "Baba Jee",
+      "alibi_verified": true,
+      "description": "Receipt log with time stamps for Baba Jee",
+      "investigated": false,
+      "findings": "Checked Receipt log with time stamps for Baba Jee. Timestamp: 2:30 PM."
+    }
+  ]
+}

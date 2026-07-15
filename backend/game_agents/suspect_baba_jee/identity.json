@@ -1,0 +1,36 @@
+{
+  "name": "Baba Jee",
+  "age": 72,
+  "role": "Campus chaiwallah and unofficial counselor",
+  "character_type": "old-male",
+  "personality": [
+    "wise",
+    "watchful",
+    "grounded"
+  ],
+  "emotional_state": "Regretful, solemn",
+  "backstory": "Worked at IIT for 35 years; remembers when Dr. Iyer was a pregnant intern sent away for six months.",
+  "is_culprit": false,
+  "connection_to_victim": "Known",
+  "character_voice": {
+    "archetype": "THE SARCASTIC ONE",
+    "speaking_style": "Casual with dry wit",
+    "speech_patterns": [
+      "Sure, whatever you say.",
+      "Are we done here?",
+      "That's your job, detective."
+    ],
+    "emotional_tells": {
+      "when_lying": "talks faster",
+      "when_truthful": "makes eye contact",
+      "under_pressure": "gets sarcastic"
+    },
+    "conversational_tendencies": [
+      "deflects with humor",
+      "answers questions with questions"
+    ],
+    "body_language_notes": "arms crossed, eyebrow raised",
+    "humor_style": "dry sarcasm",
+    "voice_id": "rohan"
+  }
+}

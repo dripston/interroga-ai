@@ -1,0 +1,59 @@
+# ─── Secrets ────────────────────────────────────────────────────────────────
+.env
+
+# ─── Private Design Docs ─────────────────────────────────────────────────────
+standoff_*.txt
+*_abstract.txt
+
+# ─── Python ─────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.whl
+
+# ─── Virtual Environments ───────────────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+
+# ─── Game Session Data (generated at runtime) ───────────────────────────────
+game_agents_*/
+current_game.json
+session_usage.json
+
+# ─── Generated Case Files ───────────────────────────────────────────────────
+game_case_v2_*.json
+
+# ─── Debug / Log Files ──────────────────────────────────────────────────────
+debug_v2_*.txt
+*.log
+test_output.txt
+task_test_results.txt
+test_results.txt
+
+# ─── ML Model Cache (HuggingFace embeddings — large files) ──────────────────
+embedding_cache/
+
+# ─── FAISS Vector Index (regenerate with create_rag.py) ─────────────────────
+mystery_rag_index/
+
+# ─── Audio / Binary test files ──────────────────────────────────────────────
+*.wav
+*.webm
+*.mp3
+
+# ─── OS / Editor ────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+NUL

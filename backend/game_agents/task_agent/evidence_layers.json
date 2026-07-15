@@ -1,0 +1,61 @@
+{
+  "layer_1_surface": {
+    "description": "Obvious evidence that seems to point to culprit",
+    "evidence_ids": [
+      {
+        "type": "Forensic",
+        "description_vague": "Uncategorized evidence",
+        "full_description": "Toxicology report shows lethal insulin levels in Kabir’s blood; no history of diabetes.",
+        "points_to": "Unknown"
+      },
+      {
+        "type": "Physical",
+        "description_vague": "Uncategorized evidence",
+        "full_description": "Used syringe with trace insulin residue; vial labeled 'Vitamin B12' was actually insulin.",
+        "points_to": "Unknown"
+      },
+      {
+        "type": "Digital",
+        "description_vague": "Uncategorized evidence",
+        "full_description": "Deleted draft email from Kabir to the Dean titled 'Truth About My Adoption' with attached forged documents.",
+        "points_to": "Unknown"
+      },
+      {
+        "type": "Testimonial",
+        "description_vague": "Uncategorized evidence",
+        "full_description": "Baba Jee’s statement about overhearing Dr. Iyer’s argument with Kabir.",
+        "points_to": "Unknown"
+      }
+    ],
+    "reveals_to_player": "Initial investigation"
+  },
+  "layer_2_misdirection": {
+    "description": "Evidence that creates doubt and points to red herring",
+    "evidence_ids": [],
+    "reveals_to_player": "After interrogating suspects"
+  },
+  "layer_3_breakthrough": {
+    "description": "Deep evidence that exposes the truth",
+    "evidence_ids": [
+      {
+        "type": "alibi_verification",
+        "related_to": "Dr. Ananya Iyer",
+        "source": "Security log showing login to clinic server at 3:15 PM",
+        "requires": "Check for inconsistencies in alibi"
+      },
+      {
+        "type": "alibi_verification",
+        "related_to": "Dr. Ananya Iyer",
+        "source": "Corridor CCTV showing a figure in white coat entering her office at 3:10 PM (low resolution)",
+        "requires": "Check for inconsistencies in alibi"
+      },
+      {
+        "type": "accomplice_evidence",
+        "accomplice_name": "Rohan Mehta",
+        "evidence_type": "Financial/digital records",
+        "requires": "Deep investigation into financial/digital records"
+      }
+    ],
+    "reveals_to_player": "Requires cross-referencing multiple sources"
+  }
+}

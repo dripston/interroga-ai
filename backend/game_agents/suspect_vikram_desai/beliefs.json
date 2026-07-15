@@ -1,0 +1,19 @@
+{
+  "about_the_crime": "I believe someone did this but I don't know who",
+  "about_my_innocence": "I know I didn't do it",
+  "why_i_might_look_suspicious": "Was seen near the clinic 10 minutes before the incident.",
+  "my_explanation_for_suspicious_behavior": "I understand why my behavior (Was seen near the clinic 10 minutes before the incident.) might look suspicious, but there's an innocent explanation",
+  "what_i_think_about_other_suspects": {
+    "Dr. Ananya Iyer": "Their alibi seems weak — they could be suspicious",
+    "Rohan Mehta": "They have a solid alibi — probably innocent",
+    "Priya Nair": "They have a solid alibi — probably innocent",
+    "Baba Jee": "They have a solid alibi — probably innocent"
+  },
+  "my_theories_about_what_happened": [
+    "Whoever did this must have had inside knowledge",
+    "The timing was too perfect to be random",
+    "Someone with access to the area could have done it",
+    "There might be more to this than it appears"
+  ],
+  "how_i_feel_about_being_questioned": "I want to help but I'm also worried about being wrongly accused"
+}
