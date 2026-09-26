@@ -1,6 +1,6 @@
 # create_rag_index.py
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_core.documents import Document
 import json
@@ -68,9 +68,8 @@ print(f"📦 Split into {len(split_docs)} chunks")
 
 # Create embeddings
 print("🧠 Creating embeddings (this takes ~5-10 min)...")
-embeddings = HuggingFaceEmbeddings(
-    model_name="sentence-transformers/all-MiniLM-L6-v2",
-    model_kwargs={'device': 'cpu'}  # Use 'cuda' if you have GPU
+embeddings = FastEmbedEmbeddings(
+    model_name="sentence-transformers/all-MiniLM-L6-v2"
 )
 
 # Create vector store

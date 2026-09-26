@@ -14,7 +14,7 @@ import requests
 from pathlib import Path
 from datetime import datetime
 from dotenv import load_dotenv
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
 from langchain_community.vectorstores import FAISS
 
 load_dotenv()
@@ -27,10 +27,9 @@ CACHE_DIR = Path("./embedding_cache")
 CACHE_DIR.mkdir(exist_ok=True)
 
 print("📂 Loading RAG index...")
-embeddings = HuggingFaceEmbeddings(
+embeddings = FastEmbedEmbeddings(
     model_name="sentence-transformers/all-MiniLM-L6-v2",
-    cache_folder=str(CACHE_DIR),
-    model_kwargs={'device': 'cpu'}
+    cache_dir=str(CACHE_DIR)
 )
 vectorstore = FAISS.load_local(
     "mystery_rag_index",
