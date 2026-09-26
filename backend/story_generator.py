@@ -21,7 +21,7 @@ load_dotenv()
 
 # OpenRouter API Configuration
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
-MODEL = "meta-llama/llama-3.3-70b-instruct:free"
+MODEL = "meta-llama/llama-3.3-70b-instruct"
 
 CACHE_DIR = Path("./embedding_cache")
 CACHE_DIR.mkdir(exist_ok=True)
@@ -39,9 +39,10 @@ vectorstore = FAISS.load_local(
 print("✅ RAG index loaded!")
 
 MODELS = [
-    "meta-llama/llama-3.3-70b-instruct:free",
-    "nousresearch/hermes-3-llama-3.1-405b:free",
-    "google/gemma-4-31b-it:free"
+    "meta-llama/llama-3.3-70b-instruct",
+    "nousresearch/hermes-3-llama-3.1-405b",
+    "google/gemma-4-31b-it",
+    "qwen/qwen3.8-27b:free"
 ]
 
 async def call_openrouter(prompt):
