@@ -20,7 +20,7 @@ from langchain_community.vectorstores import FAISS
 load_dotenv()
 
 # Groq API Configuration
-MODEL = "llama-3.3-70b-versatile"
+MODEL = "openai/gpt-oss-120b"
 
 CACHE_DIR = Path("./embedding_cache")
 CACHE_DIR.mkdir(exist_ok=True)
@@ -38,9 +38,8 @@ vectorstore = FAISS.load_local(
 print("✅ RAG index loaded!")
 
 MODELS = [
-    "llama-3.3-70b-versatile",
-    "llama3-70b-8192",
-    "llama-3.1-8b-instant",
+    "openai/gpt-oss-120b",
+    "openai/gpt-oss-20b",
     "qwen/qwen3.8-27b"
 ]
 
@@ -53,7 +52,7 @@ async def call_llm(prompt):
     for model_name in MODELS:
         print(f"🎲 Attempting case generation with model: {model_name}...")
         try:
-            llm = ChatGroq(model=model_name, temperature=0.8, max_tokens=4000)
+            llm = ChatGroq(model=model_name, temperature=0.8, max_tokens=1000)
             messages = [
                 SystemMessage(content="You are a structured JSON generator. Output ONLY valid JSON. No markdown. No code fences. No thinking. No explanation. No <think> blocks. Just the raw JSON object."),
                 HumanMessage(content=prompt)
