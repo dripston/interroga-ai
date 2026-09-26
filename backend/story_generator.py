@@ -318,6 +318,7 @@ OUTPUT THIS EXACT JSON STRUCTURE:
 RESPOND WITH ONLY THE JSON. NO EXPLANATION. NO THINKING."""
 
     print(f"🎲 Generating {difficulty} case...")
+    raise Exception("Skipping case generation to use existing cases as requested.")
     for attempt in range(3):
         try:
             response = await call_llm(prompt)
