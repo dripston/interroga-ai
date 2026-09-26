@@ -31,7 +31,7 @@ class OpenRouterClient:
     """Handles all LLM calls via Groq"""
 
     @staticmethod
-    async def call(prompt: str, temperature: float = 0.7, max_tokens: int = 4000, model_name: str = "llama-3.1-8b-instant") -> str:
+    async def call(prompt: str, temperature: float = 0.7, max_tokens: int = 4000, model_name: str = os.getenv("GROQ_MODEL", "qwen/qwen3.8-27b")) -> str:
         try:
             llm = ChatGroq(model=model_name, temperature=temperature, max_tokens=max_tokens)
             response = await llm.ainvoke(prompt)
@@ -225,7 +225,7 @@ AVAILABLE SOURCES (For suggesting what to investigate — NEVER reveal findings 
             full_prompt,
             temperature=0.3,
             max_tokens=200,
-            model_name="llama-3.1-8b-instant"
+            model_name=os.getenv("GROQ_MODEL", "qwen/qwen3.8-27b")
         )
         return response.strip()
 

@@ -36,7 +36,7 @@ class OpenRouterClient:
     @staticmethod
     async def call(prompt: str, temperature: float = 0.7, max_tokens: int = 4000) -> str:
         try:
-            llm = ChatGroq(model="llama-3.1-8b-instant", temperature=temperature, max_tokens=max_tokens)
+            llm = ChatGroq(model=os.getenv("GROQ_MODEL", "qwen/qwen3.8-27b"), temperature=temperature, max_tokens=max_tokens)
             response = await llm.ainvoke(prompt)
             return response.content
         except Exception as e:
@@ -224,7 +224,7 @@ def clean_response(text: str, suspect_name: str) -> str:
 async def call_llm(system_prompt: str, suspect_name: str, conversation_history: list, user_input: str) -> str:
     """Non-streaming LLM call — used by text mode."""
     chat_messages = build_chat_messages(system_prompt, suspect_name, conversation_history, user_input)
-    llm = ChatGroq(model="llama-3.1-8b-instant", temperature=0.85, max_tokens=180)
+    llm = ChatGroq(model=os.getenv("GROQ_MODEL", "qwen/qwen3.8-27b"), temperature=0.85, max_tokens=180)
     response_msg = await llm.ainvoke(chat_messages)
     return clean_response(response_msg.content.strip(), suspect_name)
 
@@ -753,7 +753,7 @@ YOUR REACTION:"""
         
         full_response = ""
         llm = ChatGroq(
-            model="llama-3.1-8b-instant",
+            model=os.getenv("GROQ_MODEL", "qwen/qwen3.8-27b"),
             temperature=0.85,
             max_tokens=180,
             streaming=True
