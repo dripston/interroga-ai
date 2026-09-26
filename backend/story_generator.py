@@ -19,9 +19,8 @@ from langchain_community.vectorstores import FAISS
 
 load_dotenv()
 
-# OpenRouter API Configuration
-OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
-MODEL = "meta-llama/llama-3.3-70b-instruct"
+# Groq API Configuration
+MODEL = "llama-3.3-70b-versatile"
 
 CACHE_DIR = Path("./embedding_cache")
 CACHE_DIR.mkdir(exist_ok=True)
@@ -39,58 +38,37 @@ vectorstore = FAISS.load_local(
 print("✅ RAG index loaded!")
 
 MODELS = [
-    "meta-llama/llama-3.3-70b-instruct",
-    "nousresearch/hermes-3-llama-3.1-405b",
-    "google/gemma-4-31b-it",
-    "qwen/qwen3.8-27b:free"
+    "llama-3.3-70b-versatile",
+    "llama3-70b-8192",
+    "llama-3.1-8b-instant",
+    "qwen/qwen3.8-27b"
 ]
 
-async def call_openrouter(prompt):
-    """Call OpenRouter API with fallback models to handle 429 rate limits"""
-    from dotenv import load_dotenv
+async def call_llm(prompt):
+    """Call Groq API with fallback models to handle rate limits"""
+    from langchain_groq import ChatGroq
+    from langchain_core.messages import SystemMessage, HumanMessage
     import os
-    load_dotenv(override=True)
-    api_key = os.getenv("OPENROUTER_API_KEY", "")
-
+    
     for model_name in MODELS:
         print(f"🎲 Attempting case generation with model: {model_name}...")
         try:
-            async with httpx.AsyncClient(timeout=300.0) as client:
-                response = await client.post(
-                    OPENROUTER_URL,
-                    headers={
-                        "Authorization": f"Bearer {api_key}",
-                        "Content-Type": "application/json",
-                    },
-                    json={
-                        "model": model_name,
-                        "messages": [
-                            {
-                                "role": "system",
-                                "content": "You are a structured JSON generator. Output ONLY valid JSON. No markdown. No code fences. No thinking. No explanation. No <think> blocks. Just the raw JSON object."
-                            },
-                            {"role": "user", "content": prompt}
-                        ],
-                        "temperature": 0.8,
-                        "max_tokens": 6000
-                    }
-                )
-
-                if response.status_code == 200:
-                    result = response.json()
-                    if 'choices' in result and len(result['choices']) > 0:
-                        content = result['choices'][0]['message']['content']
-                        if content.strip():
-                            # Set global MODEL to this successful one so it's logged in metadata
-                            global MODEL
-                            MODEL = model_name
-                            return content
-                    print(f"⚠️ OpenRouter ({model_name}): Invalid/Empty response format")
-                else:
-                    print(f"⚠️ OpenRouter ({model_name}): HTTP {response.status_code} - {response.text[:200]}")
-
+            llm = ChatGroq(model=model_name, temperature=0.8, max_tokens=4000)
+            messages = [
+                SystemMessage(content="You are a structured JSON generator. Output ONLY valid JSON. No markdown. No code fences. No thinking. No explanation. No <think> blocks. Just the raw JSON object."),
+                HumanMessage(content=prompt)
+            ]
+            response = await llm.ainvoke(messages)
+            
+            if response.content and response.content.strip():
+                # Set global MODEL to this successful one so it's logged in metadata
+                global MODEL
+                MODEL = model_name
+                return response.content
+            print(f"⚠️ Groq ({model_name}): Invalid/Empty response format")
+            
         except Exception as e:
-            print(f"⚠️ OpenRouter ({model_name}) request error: {str(e)}")
+            print(f"⚠️ Groq ({model_name}) request error: {str(e)}")
         
         print("🔄 Trying next fallback model...")
     
@@ -343,7 +321,7 @@ RESPOND WITH ONLY THE JSON. NO EXPLANATION. NO THINKING."""
     print(f"🎲 Generating {difficulty} case...")
     for attempt in range(3):
         try:
-            response = await call_openrouter(prompt)
+            response = await call_llm(prompt)
             debug_file = f"debug_v2_{difficulty}_{datetime.now().strftime('%H%M%S')}.txt"
             with open(debug_file, 'w', encoding='utf-8') as f:
                 f.write(response)
